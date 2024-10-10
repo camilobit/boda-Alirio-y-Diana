@@ -92,18 +92,18 @@
   <!-- sobre animacion copiar esta -->
 
   <!-- ANIMACIÓN SOBRE -->
-  <div id="myModal" class="modal" style="background-color: rgb(255, 255, 255);">
+  <!-- <div id="myModal" class="modal" style="background-color: rgb(255, 255, 255);"> -->
   <!-- Sello -->
-  <div>
+  <!-- <div>
       <input type="image" src="sobre-animacion-portada/SelloInv.png" name="saveForm" class="sello selloAnimation"
         id="selloButton" alt="sello" />
-    </div>
+    </div> -->
   <!-- Sobres -->
-  <div id="sobreDiv">
+  <!-- <div id="sobreDiv">
       <img id="sobre1" src="sobre-animacion-portada/sobre1.png" class="sobreSize" alt="sobre neider y lina">
       <img id="sobre2" src="sobre-animacion-portada/sobre2.png" class="sobreSize" alt="sobre 2 neider y lina">
     </div>
-  </div>
+  </div> -->
   <!-- /ANIMACIÓN SOBRE  -->
 
   <!-- MÚSICA -->
@@ -2229,6 +2229,7 @@
   </script>
 
   <script>
+    // Función para manejar dos nombres
     function manejarDosNombres() {
       const nombresEnURL = window.location.search.substring(1).split('&');
 
@@ -2242,9 +2243,14 @@
         // Mostrar ambos nombres con el símbolo &
         const contenido = `${nombre1} <br class="d-md-none"><span>&</span><br class="d-md-none">${nombre2}`; // Dos nombres
         document.querySelector('#nombres-portada').innerHTML = contenido;
+      } else {
+        // Si no se pasan dos nombres, mostrar los valores por defecto
+        const contenido = `${nombre1} <br class="d-md-none"><span>&</span><br class="d-md-none">${nombre2}`;
+        document.querySelector('#nombres-portada').innerHTML = contenido;
       }
     }
 
+    // Función para manejar un solo nombre
     function manejarUnNombre() {
       const nombresEnURL = window.location.search.substring(1).split('&');
 
@@ -2253,31 +2259,41 @@
 
       if (nombresEnURL.length === 1) {
         const nombreCompleto = decodeURIComponent(nombresEnURL[0]);
-        const partesNombre = nombreCompleto.split(' ');
+        const partesNombre = nombreCompleto.split('-');
 
-        nombre1 = partesNombre[0];
+        nombre1 = partesNombre[0].trim(); // Primer nombre
+
+        // Verificar si hay un segundo nombre después del -
         if (partesNombre.length > 1) {
-          nombre2 = partesNombre.slice(1).join(' ');
+          nombre2 = partesNombre[1].trim(); // Segundo nombre (después de -)
         } else {
           nombre2 = '';
         }
       }
 
+      // Generar contenido solo con nombres
       let contenido = `${nombre1} <br class="d-md-none"><br class="d-md-none">${nombre2}`;
       document.querySelector('#nombres-portada').innerHTML = contenido.trim();
     }
 
-    const nombresEnURL = window.location.search.substring(1).split('&');
-    if (nombresEnURL.length === 2) {
-      manejarDosNombres();
+    // Verifica si hay parámetros en la URL
+    if (window.location.search) {
+      const nombresEnURL = window.location.search.substring(1).split('&');
+      if (nombresEnURL.length === 2) {
+        manejarDosNombres();
+      } else if (nombresEnURL.length === 1) {
+        manejarUnNombre();
+      } else {
+        // Si no se pasan nombres, mostrar valores por defecto
+        const contenido = `Cristian <br class="d-md-none"><span>&</span><br class="d-md-none">Yesmith`;
+        document.querySelector('#nombres-portada').innerHTML = contenido;
+      }
     } else {
-      manejarUnNombre();
+      // Si no hay parámetros, mostrar valores por defecto
+      const contenido = `Cristian <br class="d-md-none"><span>&</span><br class="d-md-none">Yesmith`;
+      document.querySelector('#nombres-portada').innerHTML = contenido;
     }
   </script>
-
-
-
-
 
   <!-- sobre animacion copiar esta -->
 
